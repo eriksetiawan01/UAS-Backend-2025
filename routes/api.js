@@ -21,7 +21,7 @@ router.post("/patients", PatientController.store);  // Menambahkan data student 
 router.put("/patients/:id", PatientController.update);  // Mengupdate data student
 router.delete("/patients/:id", PatientController.destroy);  // Menghapus data student
 router.get("/patients/search/:name", PatientController.search); // Pencarian pasien berdasarkan nama
-router.get("/patients/status/positive", PatientController.statusPositive); // Menampilkan pasien dengan status positive
+router.get("/patients/status/:status", PatientController.statusByStatus); // Menampilkan pasien dengan status positive
 
 
 

@@ -163,20 +163,30 @@ class PatientController {
     }
   }
 
-  // Fungsi untuk menampilkan pasien dengan status 'positive'
-async statusPositive(req, res) {
+ // Fungsi untuk menampilkan pasien berdasarkan status
+async statusByStatus(req, res) {
   try {
-    const patients = await Patient.findByStatus('positive'); // Mencari pasien dengan status 'positive'
+    const { status } = req.params; // Mendapatkan status dari parameter URL
+
+    // Validasi status yang diterima
+    const validStatuses = ['positive', 'recovered', 'dead']; // Daftar status yang valid
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({
+        message: "Status tidak valid. Pilih antara 'positive', 'recovered', atau 'dead'."
+      });
+    }
+
+    const patients = await Patient.findByStatus(status); // Mencari pasien dengan status yang diterima
 
     if (patients.length > 0) {
       const data = {
-        message: "Menampilkan pasien dengan status positive",
+        message: `Menampilkan pasien dengan status ${status}`,
         data: patients,
       };
       res.status(200).json(data);
     } else {
       const data = {
-        message: "Tidak ada pasien dengan status positive",
+        message: `Tidak ada pasien dengan status ${status}`,
       };
       res.status(404).json(data);
     }
@@ -187,6 +197,7 @@ async statusPositive(req, res) {
     });
   }
 }
+
 
 
   
